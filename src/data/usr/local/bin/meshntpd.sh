@@ -15,9 +15,13 @@ do
 done
 candidate=$(uci -q get system.ntp.server)
 if [ "${candidate}" != "" ]; then
-    servers="${servers} -p ${candidate}"
+    if $(ntpd -n -q -p ${candidate} > /dev/null 2>&1); then
+        servers="${servers} -p ${candidate}"
+    fi
 fi
 
 /etc/init.d/ntpclient stop 2> /dev/null
 killall ntpd 2> /dev/null
-ntpd ${servers}
+if [ "${servers}" != "" ]; then
+    ntpd ${servers}
+fi
