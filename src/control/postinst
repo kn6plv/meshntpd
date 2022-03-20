@@ -1,0 +1,8 @@
+#!/bin/sh
+
+/etc/init.d/meshntpd enable
+/etc/init.d/meshntpd start
+
+echo "<br>MeshNTP has been enabled and will automatically detect and use NTP servers on the mesh."
+
+exit 0

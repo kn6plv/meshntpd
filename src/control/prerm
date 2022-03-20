@@ -1,0 +1,6 @@
+#! /bin/sh
+
+/etc/init.d/meshntpd disable
+/etc/init.d/meshntpd stop
+
+exit 0

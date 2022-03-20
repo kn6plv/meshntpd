@@ -1,0 +1,10 @@
+Package: meshntpd
+Version: 0.1
+Depends:
+Provides:
+Source: package/meshntpd
+Section: net
+Priority: optional
+Maintainer: Tim Wilkinson (KN6PLV)
+Architecture: all
+Description: NTP client which autodetects NTP servers on the mesh
