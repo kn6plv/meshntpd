@@ -22,8 +22,11 @@ do
 done
 
 
-/etc/init.d/ntpclient stop 2> /dev/null
-killall ntpd 2> /dev/null
 if [ "${servers}" != "" ]; then
+    logger -p notice -t meshntpd "ntpd starting with servers ${servers}"
+    /etc/init.d/ntpclient stop 2> /dev/null
+    killall ntpd 2> /dev/null
     ntpd ${servers}
+else
+    logger -p notice -t meshntpd "No reachable servers, ntpd not started."
 fi
