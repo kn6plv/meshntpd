@@ -1,0 +1,32 @@
+#! /bin/sh
+# Update ntp peers daily
+
+servers=""
+candidate=$(uci -q get system.ntp.server)
+if [ "${candidate}" != "" ]; then
+    if $(ntpd -n -q -p ${candidate} > /dev/null 2>&1); then
+        servers="${servers} -p ${candidate}"
+    fi
+fi
+
+# NTP servers tend to be poorly advertised, so we have to use a bit of
+# heuristics to find them
+for candidate in $(grep -i ntp /var/run/services_olsr | sed "s/^http:\/\/\(.*\):.*$/\1/")
+do
+    if $(ntpd -n -q -p ${candidate} > /dev/null 2>&1); then
+        servers="${servers} -p ${candidate}"
+    fi
+done
+
+curr=$(ps | grep ntpd | grep -v grep)
+curr=$(echo "$curr" | sed "s/^.*ntpd//")
+# Restart ntp with new peers if they've changed
+if [ "${curr}" != "${servers}" ]; then
+    if [ "${servers}" != "" ]; then
+        logger -p notice -t meshntpd "Running with servers:$(echo "${servers}" | sed 's/ -p//g')."
+        killall ntpd
+        ntpd ${servers}
+    else
+        logger -p notice -t meshntpd "No reachable servers."
+    fi
+fi

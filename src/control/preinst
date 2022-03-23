@@ -2,4 +2,6 @@
 
 /etc/init.d/meshntpd stop > /dev/null 2>&1
 
+mkdir -p /etc/cron.daily
+
 exit 0
