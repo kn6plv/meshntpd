@@ -6,10 +6,9 @@ SERVICE_WRITE_PID=1
 SERVICE_DAEMONIZE=1
 
 start() {
-    service_start /usr/local/bin/meshntpd.sh
+    service_start /usr/local/bin/meshntpd.sh start
 }
 
 stop() {
-    service_stop /usr/local/bin/meshntpd.sh
-    killall ntpd
+    /usr/local/bin/meshntpd.sh stop
 }
