@@ -3,7 +3,7 @@
 if [ -f /etc/cron.daily/update-clock ]; then
     mv -f /etc/cron.daily/update-clock /etc/cron.daily/update-clock.disabled
 fi
-start-stop-daemon -S -b -x /etc/cron.daily/meshntp-update
+start-stop-daemon -S -b -x /etc/cron.daily/meshntp-update -- --delay 180
 
 echo "<br>MeshNTP has been enabled and will automatically detect and use NTP servers on the mesh."
 

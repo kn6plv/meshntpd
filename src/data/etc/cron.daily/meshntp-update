@@ -3,6 +3,10 @@
 
 exec 2> /dev/null
 
+if [ "$1" = "--delay" ]; then
+    sleep $2
+fi
+
 servers=""
 candidate=$(uci -q get system.ntp.server)
 if [ "${candidate}" != "" ]; then
