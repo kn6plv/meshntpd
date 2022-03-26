@@ -1,6 +1,7 @@
 #! /bin/sh
 
-/etc/init.d/meshntpd disable
-/etc/init.d/meshntpd stop
+if [ -f /etc/cron.daily/update-clock.disabled ]; then
+    mv -f /etc/cron.daily/update-clock.disabled /etc/cron.daily/update-clock
+fi
 
 exit 0

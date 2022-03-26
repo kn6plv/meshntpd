@@ -1,10 +1,12 @@
 #! /bin/sh
 # Update ntp peers daily
 
+exec 2> /dev/null
+
 servers=""
 candidate=$(uci -q get system.ntp.server)
 if [ "${candidate}" != "" ]; then
-    if $(ntpd -n -q -p ${candidate} > /dev/null 2>&1); then
+    if $(ntpd -n -q -p ${candidate}); then
         servers="${servers} -p ${candidate}"
     fi
 fi
@@ -13,7 +15,7 @@ fi
 # heuristics to find them
 for candidate in $(grep -i ntp /var/run/services_olsr | sed "s/^http:\/\/\(.*\):.*$/\1/")
 do
-    if $(ntpd -n -q -p ${candidate} > /dev/null 2>&1); then
+    if $(ntpd -n -q -p ${candidate}); then
         servers="${servers} -p ${candidate}"
     fi
 done
