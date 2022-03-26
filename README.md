@@ -2,7 +2,7 @@
 
 ## Replace AREDN's ntpclient with ntpd
 
-When the service starts at boot time, it waits 120 seconds to allow OLSR to populate its *services_olsr* file with services on the mesh. It then tests the NTP Server entered on the **Basic Settings** page to see whether it is reachable. An NTP query is sent to determine reachability. If it is reachable on the network, then it is added to the top of the list of available NTP servers.
+When the service starts it tests the NTP Server entered on the **Basic Settings** page to see whether it is reachable. An NTP query is sent to determine reachability. If it is reachable on the network, then it is added to the top of the list of available NTP servers.
 
 Next it searches for any NTP services found by OLSR and tests each one to determine if it is reachable across the network. If it is reachable then it is added to the list of available NTP servers for ntpd to query. The search process looks for "ntp" anywhere in the advertised service description field (upper or lowercase). This list is updated every day so new servers can be located automatically.
 
